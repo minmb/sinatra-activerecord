@@ -32,8 +32,10 @@ module Sinatra
     def database_file=(path)
       require 'pathname'
 
-      return if root.nil?
-      path = File.join(root, path) if Pathname.new(path).relative?
+      if Pathname.new(path).relative?
+        return if root.nil?
+        path = File.join(root, path)
+      end
 
       if File.exists?(path)
         require 'yaml'
